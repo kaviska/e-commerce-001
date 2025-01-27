@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Action\ResponseProtocol;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,21 @@ class SubCategoryController
     public function store(Request $request)
     {
         //
+        try {
+            //code...
+            $validateData= $request->validate([
+                'name'=>'required',
+                'category_id'=>'required',
+            ]);
+            $subCategory = new SubCategory();
+            $subCategory->name = $request->name;
+            $subCategory->category_id = $request->category_id;
+            $subCategory->save();
+            return ResponseProtocol::success($subCategory, 'Sub Category Created');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ResponseProtocol::failed($th, 'Failed to create Sub Category');
+        }
     }
 
     /**

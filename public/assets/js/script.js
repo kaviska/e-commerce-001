@@ -1,7 +1,7 @@
 // Reusable function to send requests
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM loaded");
-    });
+});
 
 async function sendRequest({ method, url, data = {}, onSuccess, onError }) {
     try {
@@ -9,7 +9,7 @@ async function sendRequest({ method, url, data = {}, onSuccess, onError }) {
 
         // Check if the request method is GET or HEAD (no body allowed)
         const isGetOrHead = method === "GET" || method === "HEAD";
-        
+
         let requestOptions = {
             method,
             headers: {
@@ -31,7 +31,7 @@ async function sendRequest({ method, url, data = {}, onSuccess, onError }) {
         console.log("Sending request:", requestOptions);
 
         const response = await fetch(url, requestOptions);
-        
+
         let result;
         try {
             result = await response.json(); // Attempt to parse JSON
@@ -45,7 +45,7 @@ async function sendRequest({ method, url, data = {}, onSuccess, onError }) {
         } else {
             console.error("Request failed:", result);
             onError(result);
-           
+
         }
     } catch (error) {
         console.error("Network error:", error);
@@ -84,6 +84,8 @@ function register() {
         onSuccess: (response) => {
             showToast(response.message, "bg-green-500");
             localStorage.setItem("user", response.results)
+            //refresh page
+            location.reload();
 
         },
         onError: (error) => {
@@ -112,6 +114,8 @@ function login() {
         onSuccess: (response) => {
             showToast(response.message, "bg-green-500");
             localStorage.setItem("user", response.results)
+            //refresh page
+            location.reload();
 
         },
         onError: (error) => {
@@ -121,22 +125,28 @@ function login() {
     });
 }
 
-function loadCart(){
+function loadCart() {
     sendRequest({
         method: "GET",
-        url:  "http://127.0.0.1:8000/api/carts", // Replace with actual endpoint
+        url: "http://127.0.0.1:8000/api/carts", // Replace with actual endpoint
         onSuccess: (response) => {
             showToast(response.message, "bg-green-500");
             let cart = response.results;
+            let itemCount;
+            let total;
+
+
 
             cart.forEach(item => {
-                if(document.getElementById('cartContainer')){
+                if (document.getElementById('cartContainer')) {
+                    itemCount += item.quantity;
+                    total += item.product.price * item.quantity;
                     document.getElementById('cartContainer').innerHTML += `
                   
                         <div
-                        class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-gray-200 group">
+                        class="flex flex-row min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-gray-200 group">
                         <div class="w-full md:max-w-[126px]">
-                            <img src="https://pagedone.io/asset/uploads/1701162850.png" alt="perfume bottle image"
+                            <img src="/assets/images/${item.product.image}" alt="perfume bottle image"
                                 class="mx-auto rounded-xl object-cover">
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-4 w-full">
@@ -192,10 +202,12 @@ function loadCart(){
 
                    
 `
-                    
 
-            }});
-              
+
+
+                }
+            });
+
 
         },
         onError: (error) => {
@@ -209,3 +221,98 @@ document.addEventListener("DOMContentLoaded", function () {
     loadCart()
 
 });
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.getElementById('login-link');
+    const logoutLink = document.getElementById('logout-link');
+
+    // Check if the user is logged in
+    const user = localStorage.getItem('user');
+    if (user) {
+        loginLink.classList.add('hidden');
+        logoutLink.classList.remove('hidden');
+    } else {
+        loginLink.classList.remove('hidden');
+        logoutLink.classList.add('hidden');
+    }
+
+    // Handle logout
+    logoutLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        localStorage.removeItem('user');
+        showToast("Logged out successfully", "bg-green-500");
+        loginLink.classList.remove('hidden');
+        logoutLink.classList.add('hidden');
+    });
+
+    // Function to update cart count
+    async function updateCartCount() {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/carts", {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    ...(user && { 'Authorization': `Bearer ${user}` })
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch cart data");
+            }
+
+            const result = await response.json();
+            const cartItems = result.results || [];
+            const cartCount = cartItems.reduce((total, item) => item.quantity, 0);
+            const cartCountElement = document.getElementById("cartCount");
+
+            cartCountElement.textContent = cartCount;
+        } catch (error) {
+            console.error("Error updating cart count:", error);
+        }
+    }
+
+    // Update cart count on page load
+    updateCartCount();
+});
+
+async function addToCart(productId) {
+    console.log("Adding product to cart:", productId);
+    const user = localStorage.getItem('user');
+    if (!user) {
+        showToast("Please log in to add items to the cart", "bg-red-500");
+        return;
+    }
+
+    const data = {
+        product_id: productId,
+        quantity: document.getElementById('quantity').value // Default quantity to add
+    };
+
+    sendRequest({
+        method: "POST",
+        url: "http://127.0.0.1:8000/api/carts", // Replace with actual endpoint
+        data: data,
+        onSuccess: (response) => {
+            showToast("Product added to cart successfully", "bg-green-500");
+
+        },
+        onError: (error) => {
+            console.error("Failed to add product to cart", error);
+            showToast("Failed to add product to cart", "bg-red-500");
+        }
+    });
+}
+
+// Function to show toast messages using TailwindCSS
+function showToast(message, bgColor) {
+    const toast = document.createElement("div");
+    toast.className = `fixed top-5 right-5 px-4 py-2 text-white rounded shadow-lg ${bgColor}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+

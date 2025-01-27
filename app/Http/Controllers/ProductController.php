@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Action\ResponseProtocol;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use WpOrg\Requests\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\SubCategory;
 
 class ProductController
 
@@ -60,7 +62,7 @@ class ProductController
                 'name' => 'required|string|min:3|max:255',
                 'description' => 'required|string|min:3|max:255',
                 'price' => 'required|numeric',
-                'image' => 'required|string',
+                'image' => 'required|image',
                 'stock' => 'required|numeric',
                 'sub_category_id' => 'required|numeric',
             ]);
@@ -68,8 +70,24 @@ class ProductController
             //start db transaction
             DB::beginTransaction();
 
+            //store the image in public assets images folder
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->extension();
+            $image->move(public_path('images'), $image_name);
+
+            //finth the category id for the sub category id
+            $sub_category = SubCategory::find($validateData['sub_category_id']);
+            $category_id = $sub_category->category_id;
+
+
             $product = Product::create([
-              $validateData
+                'name' => $validateData['name'],
+                'description' => $validateData['description'],
+                'price' => $validateData['price'],
+                'image' => $image_name,
+                'stock' => $validateData['stock'],
+                'sub_category_id' => $validateData['sub_category_id'],
+                'category_id' => $category_id,
             ]);
 
             //commit db transaction
@@ -144,6 +162,33 @@ class ProductController
             //throw $th;
             DB::rollBack();
             return ResponseProtocol::failed($th->getMessage(), 'Product delete failed');
+        }
+    }
+    public function changeStatus(Request $request)
+    {
+        try {
+            //code...
+            $validateData= $request->validate([
+                'id' => 'required|numeric',
+             
+            ]);
+            return ResponseProtocol::success($validateData);
+
+            //start db transaction
+            DB::beginTransaction();
+
+            $product = Order::find($request->id);
+            $product->status ='completed';
+            $product->save();
+
+            //commit db transaction
+            DB::commit();
+
+            return ResponseProtocol::success($product, 'Product status changed successfully');
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return ResponseProtocol::failed($th->getMessage(), 'Product status change failed');
         }
     }
 }

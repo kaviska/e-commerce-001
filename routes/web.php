@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Admin;
+use App\Livewire\AdminLogin;
 use App\Livewire\Home;
 use App\Livewire\Product;
 use App\Livewire\Register;
@@ -16,3 +18,8 @@ Route::get('/product/{id}',Product::class);
 Route::get('/cart',Cart::class);
 //allProduct
 Route::get('/allProduct/{id}',AllProduct::class);
+Route::get('/admin',Admin::class);
+//admin-login
+Route::get('/adminLogin',function(){
+    return view('adminLogin');
+});

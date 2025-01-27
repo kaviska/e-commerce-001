@@ -2,9 +2,9 @@
     {{-- If your happiness depends on money, you will never be happy with yourself. --}}
   
 
-<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('../public/assets/images/paw_bkgrd.jpg');">
+<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('{{ asset('/assets/images/paw_bkgrd.jpg') }}');">
     
-    <div class="bg-white bg-opacity-90 p-6 sm:p-8 -mt-12 rounded-lg shadow-2xl border border-gray-300 max-w-sm sm:max-w-md w-full">
+    <div class="bg-white bg-opacity-90 p-6 sm:p-8 mt-10 rounded-lg shadow-2xl border border-gray-300 max-w-sm sm:max-w-md w-full">
         <h2 class="text-center text-xl sm:text-2xl font-bold mb-4 sm:mb-6" style="font-family: 'CarmenSans', san-serif;">Create Account</h2>
         
        
@@ -35,7 +35,7 @@
   
     <div class="flex flex-col items-center">
         <button id="register" onclick="register()" class="w-full bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 sm:py-3 px-4 mt-4 sm:mt-6 rounded-full text-center text-sm sm:text-base">Sign Up</button>
-        <a href="/pet_comforts/public/login.php" class="mt-4 sm:mt-6 text-blue-500 hover:underline text-sm sm:text-base">Already have an account? Sign In</a>
+        <a href="{{url('/login')}}" class="mt-4 sm:mt-6 text-blue-500 hover:underline text-sm sm:text-base">Already have an account? Sign In</a>
     </div>
 
 

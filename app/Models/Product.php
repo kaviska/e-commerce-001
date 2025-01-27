@@ -14,6 +14,7 @@ class Product extends Model
         'price',
         'image',
       'stock',
+      'category_id',
         'sub_category_id',
     ];
     public function subCategory()
@@ -24,5 +25,9 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

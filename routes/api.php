@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Livewire\Signin;
+use App\Http\Controllers\SubCategoryController;
 
 //products api
 Route::prefix('products')->group(function(){
@@ -14,6 +15,7 @@ Route::prefix('products')->group(function(){
     Route::get('/{product}', [ProductController::class, 'show']);
     Route::put('/{product}', [ProductController::class, 'update']);
     Route::delete('/{product}', [ProductController::class, 'destroy']); 
+    Route::post('/changeStatus', [ProductController::class, 'changeStatus']);
 });
 Route::get('/login', [Signin::class, 'login']);
 
@@ -36,4 +38,12 @@ Route::prefix('carts')->middleware('auth:sanctum')->group(function(){
     Route::get('/{cart}', [CartController::class, 'show']);
     Route::put('/{cart}', [CartController::class, 'update']);
     Route::delete('/{cart}', [CartController::class, 'destroy']);
+});
+//sub category api
+Route::prefix('subcategories')->group(function(){
+    Route::get('/', [SubCategoryController::class, 'index']);
+    Route::post('/', [SubCategoryController::class, 'store']);
+    Route::get('/{subCategory}', [SubCategoryController::class, 'show']);
+    Route::put('/{subCategory}', [SubCategoryController::class, 'update']);
+    Route::delete('/{subCategory}', [SubCategoryController::class, 'destroy']);
 });

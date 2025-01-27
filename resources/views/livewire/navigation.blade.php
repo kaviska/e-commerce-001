@@ -44,13 +44,17 @@
             </div>
             <!-- Sign In and Cart for Larger Screens -->
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="#" class="flex items-center">
+                <a href="{{ url('/login') }}" id="login-link" class="flex items-center">
                     <img src="{{ asset('assets/images/pet-care.png') }}" alt="Sign In Icon" class="h-10">
                     <span class="ml-2 text-lg font-semibold text-[#5272BB]" style="font-family: 'League Spartan', sans-serif;">Sign In</span>
                 </a>
-                <a href="#" class="relative flex items-center">
+                <a href="#" id="logout-link" class=" items-center hidden">
+                    <i class="fas fa-sign-out-alt text-2xl text-[#5272BB]"></i>
+                    <span class="ml-2 text-lg font-semibold text-[#5272BB]" style="font-family: 'League Spartan', sans-serif;">Logout</span>
+                </a>
+                <a href="{{ url('/cart') }}" class="relative flex items-center">
                     <img src="{{ asset('assets/images/pet_cart.png') }}" alt="Cart Icon" class="h-10">
-                    <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                    <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full" id='cartCount'>0</span>
                 </a>
             </div>
         </div>
@@ -63,7 +67,7 @@
                 <i class="fas fa-search text-gray-500"></i>
             </button>
             <div class="mt-4">
-                <a href="#" class="block py-2 text-lg font-semibold text-[#5272BB]" style="font-family: 'League Spartan', sans-serif;">Sign In</a>
+                <a href="{{url('/login')}}" class="block py-2 text-lg font-semibold text-[#5272BB]" style="font-family: 'League Spartan', sans-serif;">Sign In</a>
                 <a href="#" class="block py-2 text-lg font-semibold text-[#001952]" style="font-family: 'League Spartan', sans-serif;">Cart</a>
             </div>
         </div>
@@ -78,13 +82,14 @@
                     <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block absolute left-0 w-[200px] bg-[#001952] py-4 px-4 z-10">
+                <div class="mega-menu hidden group-hover:block   top-full w-[100%] bg-[#001952] py-4 px-4 z-10">
                     <div class="container mx-auto flex justify-around">
                         <ul>
                             @foreach($c1 as $subCategory)
                                 <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
                             @endforeach
                         </ul>
+                        
                     </div>
                 </div>
             </li>
@@ -95,7 +100,7 @@
                     <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block absolute left-0w-[200px] bg-[#001952] py-4 px-4 z-10">
+                <div class="mega-menu hidden group-hover:block  w-[100%] bg-[#001952] py-4 px-4 z-10">
                     <div class="container mx-auto flex justify-around">
                         <ul>
                             @foreach($c2 as $subCategory)
@@ -111,7 +116,7 @@
                     <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block absolute left-0w-[200px] bg-[#001952] py-4 px-4  z-10">
+                <div class="mega-menu hidden group-hover:block  w-[100%] bg-[#001952] py-4 px-4  z-10">
                     <div class="container mx-auto flex justify-around">
                         <ul>
                             @foreach($c3 as $subCategory)
@@ -127,7 +132,7 @@
                     <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block absolute left-0w-[200px] bg-[#001952] py-4 px-4  z-10">
+                <div class="mega-menu hidden group-hover:block w-[100%] bg-[#001952] py-4 px-4  z-10">
                     <div class="container mx-auto flex justify-around">
                         <ul>
                             @foreach($c4 as $subCategory)
@@ -143,7 +148,7 @@
                     <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block absolute left-0w-[200px] bg-[#001952] py-4 px-4  z-10">
+                <div class="mega-menu hidden group-hover:block w-[100%] bg-[#001952] py-4 px-4  z-10">
                     <div class="container mx-auto flex justify-around">
                         <ul>
                             @foreach($c5 as $subCategory)

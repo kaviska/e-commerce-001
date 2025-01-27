@@ -1,8 +1,8 @@
 <section class="relative ">
     <div class="w-full py-10 mx-auto px-4 sm:px-6 lg:px-0">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mx-auto max-md:px-2 ">
-            <div class="img">
-                <div class="img-box rounded-[10px] ] max-lg:mx-auto ">
+            <div class="img  flex justify-center">
+                <div class="img-box rounded-[10px] max-lg:mx-auto ">
                     <img src="{{ asset('assets/images/' . $product->image) }}" alt="Yellow Tropical Printed Shirt image"
                         class="max-lg:mx-auto lg:ml-auto h-full object-cover">
                 </div>
@@ -10,7 +10,7 @@
             <div
                 class="data w-full lg:pr-8 pr-0 xl:justify-start justify-center flex items-center max-lg:pb-10 xl:my-2 lg:my-5 my-0">
                 <div class="data w-full max-w-xl">
-                    <p class="text-lg font-medium leading-8 text-indigo-600 mb-4">Clothing&nbsp; /&nbsp; Menswear
+                    <p class="text-lg font-medium leading-8 text-indigo-600 mb-4">{{$product->category->name}}&nbsp; /&nbsp; {{$product->subcategory->name}}</p>
                     </p>
                     <h2 class="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2 capitalize">Basic
                        {{$product->name}}</h2>
@@ -142,34 +142,24 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
                         <div class="flex sm:items-center sm:justify-center w-full">
-                            <button
-                                class="group py-4 px-6 border border-gray-400 rounded-l-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
-                                <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22"
-                                    viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <button id="decrement" class="group py-4 px-6 border border-gray-400 rounded-l-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
+                                <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
-                                    <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                        stroke-linecap="round" />
-                                    <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                        stroke-linecap="round" />
+                                    <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6" stroke-linecap="round" />
+                                    <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6" stroke-linecap="round" />
                                 </svg>
                             </button>
-                            <input type="text"
-                                class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50"
-                                placeholder="1">
-                            <button
-                                class="group py-4 px-6 border border-gray-400 rounded-r-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
-                                <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22"
-                                    viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="#9CA3AF" stroke-width="1.6"
-                                        stroke-linecap="round" />
-                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="black" stroke-opacity="0.2"
-                                        stroke-width="1.6" stroke-linecap="round" />
-                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="black" stroke-opacity="0.2"
-                                        stroke-width="1.6" stroke-linecap="round" />
+                            <input type="text" id="quantity" class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50" value="1">
+                            <button id="increment" class="group py-4 px-6 border border-gray-400 rounded-r-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
+                                <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" />
+                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="black" stroke-opacity="0.2" stroke-width="1.6" stroke-linecap="round" />
+                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="black" stroke-opacity="0.2" stroke-width="1.6" stroke-linecap="round" />
                                 </svg>
                             </button>
                         </div>
                         <button
+                        onclick="addToCart({{$product->id}})"
                             class="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
                             <svg class="stroke-indigo-600 " width="22" height="22" viewBox="0 0 22 22" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -200,5 +190,24 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const decrementButton = document.getElementById('decrement');
+    const incrementButton = document.getElementById('increment');
+    const quantityInput = document.getElementById('quantity');
+
+    decrementButton.addEventListener('click', function () {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    incrementButton.addEventListener('click', function () {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+    });
+});
+    </script>
 </section>
                                         
