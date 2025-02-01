@@ -73,7 +73,7 @@ class ProductController
             //store the image in public assets images folder
             $image = $request->file('image');
             $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images'), $image_name);
+            $image->move(public_path('assets/images'), $image_name);
 
             //finth the category id for the sub category id
             $sub_category = SubCategory::find($validateData['sub_category_id']);
