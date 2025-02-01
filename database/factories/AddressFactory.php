@@ -25,7 +25,7 @@ class AddressFactory extends Factory
             'number' => $this->faker->buildingNumber,
             'postal_code' => $this->faker->postcode,
             //fake user id
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => 1,
           
 
         ];

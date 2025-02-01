@@ -20,7 +20,7 @@ class CartFactory extends Factory
             //
             'product_id' => $this->faker->numberBetween(1, 10),
             'quantity' => $this->faker->numberBetween(1, 10),
-            'user_id' => $this->faker->numberBetween(1, 3),
+            'user_id' => 1,
         ];
     }
 }
