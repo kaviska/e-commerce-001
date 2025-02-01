@@ -32,10 +32,17 @@
                 </a>
             </div>
             <!-- Search Bar for Larger Screens -->
-            <div class="hidden lg:flex items-center w-1/2">
-                <input type="text" wire:model="search" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Search...">
-              
+            <div class="hidden relative lg:flex items-center w-1/2">
+                <input type="text" id="search" 
+                    class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    placeholder="Search...">
+                    
+                <!-- Search Results Dropdown -->
+                <div id="searchResults" 
+                    class="absolute top-full left-0 w-full bg-white shadow-lg rounded-lg border border-gray-200 hidden z-10">
+                </div>
             </div>
+            
             <!-- Mobile Menu Button -->
             <div class="lg:hidden">
                 <button id="menu-toggle" class="text-3xl text-[#001952] focus:outline-none">

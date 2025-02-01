@@ -316,3 +316,65 @@ function showToast(message, bgColor) {
     setTimeout(() => toast.remove(), 3000);
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById('search');
+
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+            searchProducts(query);
+        } else {
+            // Clear search results if the query is empty
+            clearSearchResults();
+        }
+    });
+});
+
+async function searchProducts(query) {
+    sendRequest({
+        method: "GET",
+        url: `http://127.0.0.1:8000/api/products?search=${query}`, // Replace with actual endpoint
+        onSuccess: (response) => {
+            displaySearchResults(response.results);
+        },
+        onError: (error) => {
+            console.error("Search failed", error);
+            showToast("Search failed", "bg-red-500");
+        }
+    });
+}
+
+function displaySearchResults(products) {
+    console.log("Search results:", products);
+    const searchResultsContainer = document.getElementById('searchResults');
+    searchResultsContainer.innerHTML = ''; // Clear previous results
+
+    if (products.length === 0) {
+        searchResultsContainer.classList.add('hidden'); // Hide if no results
+        return;
+    }
+
+    products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'search-result-item border-b border-gray-200 last:border-none';
+        productElement.innerHTML = `
+            <a href="/product/${product.id}" class="flex items-center p-3 hover:bg-gray-100 transition">
+                <img src="/assets/images/${product.image}" alt="${product.name}" class="h-10 w-10 rounded-full object-cover">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">${product.name}</p>
+                    <p class="text-sm text-gray-500">${product.price} LKR</p>
+                </div>
+            </a>
+        `;
+        searchResultsContainer.appendChild(productElement);
+    });
+
+    // Show results when available
+    searchResultsContainer.classList.remove('hidden');
+}
+
+function clearSearchResults() {
+    const searchResultsContainer = document.getElementById('searchResults');
+    searchResultsContainer.innerHTML = ''; // Clear search results
+}
+
