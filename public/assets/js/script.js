@@ -126,21 +126,30 @@ function login() {
 }
 
 function loadCart() {
+    let itemCount=0;
+    let total=0;1;
+    let items=document.getElementById('items')
+
     sendRequest({
         method: "GET",
         url: "http://127.0.0.1:8000/api/carts", // Replace with actual endpoint
         onSuccess: (response) => {
             showToast(response.message, "bg-green-500");
             let cart = response.results;
-            let itemCount;
-            let total;
+        
 
 
 
             cart.forEach(item => {
                 if (document.getElementById('cartContainer')) {
-                    itemCount += item.quantity;
+                    itemCount += 1;
+                     items.innerHTML=itemCount;
+        console.log("item count" + itemCount)
                     total += item.product.price * item.quantity;
+                    document.getElementById('price').innerHTML= total.toFixed(2)
+                    document.getElementById('itemCount').innerHTML= itemCount
+
+                    console.log("total: " + total.toFixed(2));
                     document.getElementById('cartContainer').innerHTML += `
                   
                         <div
@@ -206,7 +215,10 @@ function loadCart() {
 
 
                 }
-            });
+            }
+        );
+       
+
 
 
         },
