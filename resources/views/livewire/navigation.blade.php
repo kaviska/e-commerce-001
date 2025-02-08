@@ -9,6 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ada978dc6b.js" crossorigin="anonymous"></script>
     <style>
+      body
+      {
+        overflow-x: hidden
+      }
         @font-face {
             font-family: 'CarmenSans';
             src: url('../public/assets/fonts/CarmenSans-Heavy.woff') format('woff');
@@ -39,7 +43,7 @@
                     
                 <!-- Search Results Dropdown -->
                 <div id="searchResults" 
-                    class="absolute top-full left-0 w-full bg-white shadow-lg rounded-lg border border-gray-200 hidden z-10">
+                    class="absolute top-full left-[-330%] w-full bg-wscreen shadow-lg rounded-lg border border-gray-200 hidden z-10">
                 </div>
             </div>
             
@@ -80,94 +84,97 @@
         </div>
     </div>
     <!-- Navigation Bar -->
-    <nav class="bg-[#001952] py-4 hidden lg:block">
-        <ul class="flex justify-evenly text-white uppercase font-bold text-lg" style="font-family: 'Inter', sans-serif;">
-            <!-- Dog Dropdown -->
-            <li class="relative group">
-                <a href="#" class="flex items-center">
-                    Dog
-                    <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block   top-full w-[100%] bg-[#001952] py-4 px-4 z-10">
-                    <div class="container mx-auto flex justify-around">
-                        <ul>
-                            @foreach($c1 as $subCategory)
-                                <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
-                            @endforeach
-                        </ul>
-                        
-                    </div>
+   <!-- filepath: /c:/xampp/htdocs/My Project/assigment-e-coomerce-laravel/e-commerce-001/resources/views/livewire/navigation.blade.php -->
+<nav class="bg-[#001952] py-4 hidden lg:block">
+    <ul class="flex justify-evenly text-white uppercase font-bold text-lg" style="font-family: 'Inter', sans-serif;">
+        <!-- Dog Dropdown -->
+        <li class="relative group">
+            <a href="#" class="flex items-center">
+                Dog
+                <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
+            </a>
+            <!-- Dropdown Mega Menu -->
+            <div class="mega-menu hidden group-hover:block absolute left-[-330%] top-full w-screen bg-[#001952] py-4 px-4 z-10">
+                <div class="container  flex mx-30">
+                    <ul>
+                        @foreach($c1 as $subCategory)
+                            <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </li>
-            <!-- Cat Dropdown -->
-            <li class="relative group">
-                <a href="#" class="flex items-center">
-                    Cat
-                    <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block  w-[100%] bg-[#001952] py-4 px-4 z-10">
-                    <div class="container mx-auto flex justify-around">
-                        <ul>
-                            @foreach($c2 as $subCategory)
-                                <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
+            </div>
+        </li>
+        <!-- Cat Dropdown -->
+        <li class="relative group">
+            <a href="#" class="flex items-center">
+                Cat
+                <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
+            </a>
+            <!-- Dropdown Mega Menu -->
+            <div class="mega-menu hidden group-hover:block absolute left-[-820%] top-full w-screen bg-[#001952] py-4 px-4 z-10">
+                <div class="container mx-auto flex ">
+                    <ul>
+                        @foreach($c2 as $subCategory)
+                            <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </li>
-            <li class="relative group">
-                <a href="#" class="flex items-center">
-                    Bird
-                    <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block  w-[100%] bg-[#001952] py-4 px-4  z-10">
-                    <div class="container mx-auto flex justify-around">
-                        <ul>
-                            @foreach($c3 as $subCategory)
-                                <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
+            </div>
+        </li>
+        <!-- Bird Dropdown -->
+        <li class="relative group">
+            <a href="#" class="flex items-center">
+                Bird
+                <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
+            </a>
+            <!-- Dropdown Mega Menu -->
+            <div class="mega-menu hidden group-hover:block absolute left-[-1150%] top-full w-screen bg-[#001952] py-4 px-4 z-10">
+                <div class="container mx-auto flex">
+                    <ul>
+                        @foreach($c3 as $subCategory)
+                            <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </li>
-            <li class="relative group">
-                <a href="#" class="flex items-center">
-                    Rabbit
-                    <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block w-[100%] bg-[#001952] py-4 px-4  z-10">
-                    <div class="container mx-auto flex justify-around">
-                        <ul>
-                            @foreach($c4 as $subCategory)
-                                <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
+            </div>
+        </li>
+        <!-- Rabbit Dropdown -->
+        <li class="relative group">
+            <a href="#" class="flex items-center">
+                Rabbit
+                <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
+            </a>
+            <!-- Dropdown Mega Menu -->
+            <div class="mega-menu hidden group-hover:block absolute left-[-1160%] top-full w-screen bg-[#001952] py-4 px-4 z-10">
+                <div class="container mx-auto flex">
+                    <ul>
+                        @foreach($c4 as $subCategory)
+                            <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </li>
-            <li class="relative group">
-                <a href="#" class="flex items-center">
-                    Others
-                    <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <!-- Dropdown Mega Menu -->
-                <div class="mega-menu hidden group-hover:block w-[100%] bg-[#001952] py-4 px-4  z-10">
-                    <div class="container mx-auto flex justify-around">
-                        <ul>
-                            @foreach($c5 as $subCategory)
-                                <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
+            </div>
+        </li>
+        <!-- Others Dropdown -->
+        <li class="relative group">
+            <a href="#" class="flex items-center">
+                Others
+                <span class="ml-2"><i class="fa-solid fa-chevron-down"></i></span>
+            </a>
+            <!-- Dropdown Mega Menu -->
+            <div class="mega-menu hidden group-hover:block absolute left-[-1390%] top-full w-screen bg-[#001952] py-4 px-4 z-10">
+                <div class="container mx-auto flex">
+                    <ul>
+                        @foreach($c5 as $subCategory)
+                            <li class="mb-2"><a href="{{ url('/allProduct/' . $subCategory->id) }}" class="hover:text-gray-400">{{ $subCategory->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </li>
-            <!-- Add more categories as needed -->
-        </ul>
-    </nav>
+            </div>
+        </li>
+        <!-- Add more categories as needed -->
+    </ul>
+</nav>
     <!-- JavaScript for toggling menu and search -->
     <script>
         const menuToggle = document.getElementById('menu-toggle');
